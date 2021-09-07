@@ -17,7 +17,7 @@ public class Duke {
     }
 
     public static void echo(String s){
-        System.out.println(s);
+        System.out.println("added: " + s);
     }
 
     public static void main(String[] args){
@@ -27,13 +27,21 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
 
+        List myList = new List();
+
         while (bye == false){
             line = in.nextLine();
-            if (line.equals("bye")){
+            if (line.equals("list")){
+                for (int i = 0; i <myList.getNumOfItem(); i++){
+                    System.out.println(Integer.toString(i+1) + ": " + myList.getItem(i));
+                }
+            }
+            else if (line.equals("bye")){
                 msgBye();
                 bye = true;
             }
             else {
+                myList.addItem(line);
                 echo(line);
             }
         }
