@@ -1,49 +1,35 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void msgGreet() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(("Hello from\n" + logo));
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-    }
-
-    public static void msgBye(){
-        System.out.println("Bye. Hope to see you again soon!");
-    }
-
-    public static void echo(String s){
-        System.out.println("added: " + s);
-    }
 
     public static void main(String[] args){
-        msgGreet();
+        botMessage.msgWelcome();
 
-        boolean bye = false;
+        boolean toQuit = false;
         String line;
         Scanner in = new Scanner(System.in);
 
-        List myList = new List();
+        TaskList myList = new TaskList();
 
-        while (bye == false){
+        while (toQuit == false){
             line = in.nextLine();
             if (line.equals("list")){
-                for (int i = 0; i <myList.getNumOfItem(); i++){
-                    System.out.println(Integer.toString(i+1) + ": " + myList.getItem(i));
-                }
+                botMessage.msgForList(myList);
             }
             else if (line.equals("bye")){
-                msgBye();
-                bye = true;
+                toQuit = true;
+            }
+            else if (line.contains("done")){
+                Integer index = Integer.parseInt(line.substring(5)) -1;
+                myList.setTaskDone(index);
+                botMessage.msgMarkDone(myList, index);
             }
             else {
                 myList.addItem(line);
-                echo(line);
+                botMessage.msgResponse(line);
             }
         }
+        in.close();
+        botMessage.msgBye();
     }
 }
