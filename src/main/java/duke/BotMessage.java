@@ -1,3 +1,8 @@
+package duke;
+
+import task.TaskList;
+import task.TaskType;
+
 public class BotMessage {
     public static void msgWelcome() {
         String logo = " ____        _        \n"
@@ -6,7 +11,7 @@ public class BotMessage {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(("Hello from\n" + logo));
-        System.out.println("Hello! I'm Duke");
+        System.out.println("Hello! I'm Duke.Duke");
         System.out.println("What can I do for you?");
     }
 
@@ -18,9 +23,7 @@ public class BotMessage {
         System.out.println("added: " + s);
     }
 
-    public static void msgInvalidInput(){
-        System.out.println("Invalid input. Please try again. Thank you!");
-    }
+
 
     public static void msgForList(TaskList myList){
         System.out.println("Here are the tasks in your list:");
@@ -99,4 +102,5 @@ public class BotMessage {
         System.out.println("   [" + taskTypeStringMsg + "][" + isDoneStringMsg + "] " + taskDescriptionMsg + "(at: " + taskEventPeriod + ")");
         System.out.println("Now you have " + myList.getNumOfTotalItem() + " tasks in the list.");
     }
+
 }
