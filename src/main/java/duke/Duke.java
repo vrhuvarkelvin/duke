@@ -50,15 +50,24 @@ public class Duke {
                 myList.addItemToDeadline(taskDescription, deadlineDate);
                 BotMessage.msgForDeadline(myList, myList.getNumOfTotalItem() - 1);
 
-            } else if (line.contains("event")){
-                if(line.length()<= 6){
+            } else if (line.contains("event")) {
+                if (line.length() <= 6) {
                     throw new MissingDescException("event");
                 }
                 String taskDescription = line.substring(6, line.indexOf("/"));
                 String eventPeriod = line.substring(line.indexOf("/") + 4);
 
                 myList.addItemToEvents(taskDescription, eventPeriod);
-                BotMessage.msgForEvents(myList, myList.getNumOfTotalItem()-1);
+                BotMessage.msgForEvents(myList, myList.getNumOfTotalItem() - 1);
+
+            } else if (line.contains("delete")){
+                if(line.length() <= 7 ){
+                    throw new MissingDescException("delete");
+                }
+                Integer index = Integer.parseInt(line.substring(7));
+                BotMessage.msgRemoveItem(myList, index-1);
+                myList.removeItem(index-1);
+
 
             } else {
                 throw new InvalidInputException();
