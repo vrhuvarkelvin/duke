@@ -37,6 +37,9 @@ public class Parser {
             return new DeleteCommand(taskType, userInputArray[1]);
         case "done":
             return new DoneCommand(taskType, userInputArray[1]);
+        case "find":
+        case "f":
+            return new FindCommand(userInputArray[1]);
         case "list":
         case "l":
             return new ListCommand();

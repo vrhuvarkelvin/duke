@@ -242,4 +242,19 @@ public class TaskList {
         System.out.println("\tNow you have " + (list.size()) +" task(s) in the list");
     }
 
+    public void msgForFind(String input){
+        int matchedTaskIndex = 1;
+
+        System.out.println("\tHere are the matching tasks in your list:");
+        for (Task task : list){
+            if (task.getTaskDescription().toLowerCase().contains(input.toLowerCase())){
+                System.out.println("\t" + matchedTaskIndex + "." + task);
+                matchedTaskIndex++;
+            }
+        }
+        if (matchedTaskIndex == 1){
+            System.out.println("\t No matched task in your list!");
+        }
+    }
+
 }

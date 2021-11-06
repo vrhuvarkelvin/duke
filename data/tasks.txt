@@ -1,7 +1,7 @@
 D | 1 | project  | 2021-11-11 1111
-E | 0 | meeting  | 2021-11-11 2020
 E | 0 | party  | 2021-11-23 0500
 D | 1 | buy tickets  | 2021-10-11 0800
 T | 0 | event
 D | 0 | project meeting  | 2021-10-22 2222
 E | 0 | meeting  | 2021-02-21 0900
+D | 0 | event  | 2021-08-08 0808

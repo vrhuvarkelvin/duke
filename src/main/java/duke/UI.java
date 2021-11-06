@@ -3,7 +3,7 @@ package duke;
 import java.util.Scanner;
 
 public class UI {
-    private static final String DIVIDER_LINE = "__________________________________________";
+    private static final String DIVIDER_LINE = "_____________________________________________________";
     private static final String INPUT_FORMAT_ERROR = "Please do not use '|' as it breaks the program.";
 
 
