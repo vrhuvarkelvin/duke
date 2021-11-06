@@ -16,9 +16,8 @@ public class Storage {
     }
 
     /**
-     *
-     * Creates a new file with parent directory if it does not exist
-     *
+     * Creates a new file with parent directory OR
+     * Load existing file
      */
     public void newFile(){
         try {
@@ -34,30 +33,29 @@ public class Storage {
     }
 
     /**
+     * Save all tasks into a text file
+     * Activate when ExitCommand is called
      *
-     * Creates a new file with parent directory if it does not exist
-     *
-     * @param saveFileList an array of strings to save into the txt file in path.
+     * @param TaskDetailsString array of strings to save into the txt file.
      */
-    public void saveFile(ArrayList<String> saveFileList){
+    public void saveFile(ArrayList<String> TaskDetailsString){
         try {
-            writeToFile(saveFileList);
+            writeToFile(TaskDetailsString);
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
 
     /**
+     * Create a new loaded file object (Consists of ArrayList<String>)
      *
-     * Create a new
-     *
-     * @return loaded file
+     * @return loaded file with all tasks in ArrayList<String> format
      */
     public ArrayList<String> load(){
         try {
             readFile(filePath);
         } catch (FileNotFoundException e) {
-            newFile(); //create new file
+            newFile();
             System.out.println("File not found");
         }
         return loadFile;

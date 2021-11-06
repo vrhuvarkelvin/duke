@@ -13,19 +13,27 @@ public class TaskList {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-
+    /**
+     * Constructor of TaskList
+     */
     public TaskList() {
         list = new ArrayList<Task>();
         taskSave = new ArrayList<>();
     }
 
+    /**
+     * Takes in input of String from loaded file (txt file) and creates a new list with Tasks
+     *
+     * @param loadFile String from text file
+     * @throws FileException If file is not found
+     */
     public TaskList(ArrayList<String> loadFile) throws FileException{
         list = new ArrayList<>();
         taskSave = new ArrayList<>();
         String[] taskArray;
         loadFile.listIterator();
         for(String task : loadFile){
-            taskArray = task.split(" \\|");
+            taskArray = task.split(" \\| ");
             String taskType, taskStatus, taskDescription;
             LocalDateTime date;
             Boolean isDone = false;
@@ -60,10 +68,23 @@ public class TaskList {
         }
     }
 
+    /**
+     * add new TODO object into TaskList
+     *
+     * @param taskDescription Task description e.g. Project Meeting
+     */
+
     public void addItemToDo(String taskDescription) {
         list.add(new TaskToDo(taskDescription));
         msgForAdd();
     }
+
+    /**
+     * add new DEADLINE object into Tasklist
+     *
+     * @param msgInput UserCommand (Task Description + /by + date & time)
+     * @throws InvalidInputException If input is not correct (Too short or too long)
+     */
 
     public void addItemToDeadline(String msgInput) throws InvalidInputException{
         String[] input = msgInput.split("/by ");
@@ -84,6 +105,12 @@ public class TaskList {
         msgForAdd();
     }
 
+    /**
+     * add new EVENTS object into TaskList
+     *
+     * @param msgInput UserCommand (Task Description + /at + date & time)
+     * @throws InvalidInputException If input is not correct (Too short or too long)
+     */
     public void addItemToEvents(String msgInput) throws InvalidInputException{
         String[] input = msgInput.split("/at ");
         LocalDateTime date;
@@ -103,14 +130,26 @@ public class TaskList {
 
     }
 
+    /**
+     * Set the task to Done status
+     *
+     * @param index index of the task in TaskList
+     * @throws TaskNotFoundException If task index is not found in TaskList
+     */
     public void setTaskDone(String index) throws TaskNotFoundException {
         Integer taskNumber = Integer.parseInt(index);
         if (list.size() < taskNumber){
             throw new TaskNotFoundException();
         }
-        list.get(taskNumber-1).setDone();
+        list.get(taskNumber-1).setTaskDone();
     }
 
+    /**
+     * Delete the task
+     *
+     * @param index index of the task in TaskList
+     * @throws TaskNotFoundException If task index is not found in TaskList
+     */
     public void deleteTask(String index) throws TaskNotFoundException {
         Integer taskNumber = Integer.parseInt(index);
         if (list.size() < taskNumber){
@@ -121,6 +160,14 @@ public class TaskList {
         msgForDelete();
     }
 
+    /**
+     * To determine the type of task
+     * Called by AddCommand
+     *
+     * @param taskType The type of task (TODO, DEADLINE, EVENT)
+     * @param input Task description
+     * @throws InvalidInputException If input is not correct
+     */
     public void addTask(String taskType, String input) throws InvalidInputException {
         switch (taskType) {
         case "todo":
@@ -135,24 +182,39 @@ public class TaskList {
         }
     }
 
+    /**
+     * Get the String format of each task and put them in an ArrayList of String
+     */
     public void saveList(){
         for(Task task : list){
             taskSave.add(task.getSave());
         }
     }
 
+    /**
+     * To consolidate all tasks into String
+     *
+     * @return ArrayList of String to be stored in Text File
+     */
     public ArrayList<String> getSave(){
         return taskSave;
     }
 
+
+    /**
+     * Message to user when a task is added
+     */
     public void msgForAdd(){
         System.out.println("Got it, I've added this task:");
         list.get(list.size()-1).print();
         System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
+    /**
+     * Print out all tasks in TaskList
+     */
     public void msgForList(){
-        System.out.println("Here are the tasks in your list:");
+        System.out.println("\tHere are the tasks in your list:");
         if(list.size() == 0){
             System.out.println("\t List is empty!");
         } else {
@@ -164,6 +226,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Message to user when a task is deleted
+     */
     public void msgForDelete(){
         System.out.println("\tNoted. I have removed the task: ");
         recentDelete.print();

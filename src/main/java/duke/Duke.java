@@ -12,6 +12,15 @@ public class Duke {
     private Storage storage;
     private static String Path = "data/tasks.txt";;
 
+    /**
+     * Constructor for Duke Object
+     * Filepath was given in Main method to call this constructor
+     * Creates a UI, Parser, Storage object
+     * Read and convert String in text (filepath) to a TaskList object
+     * If encounter error to read the txt file, auto create a new empty Tasklist object
+     *
+     * @param filePath Path of the text.file to be read/save
+     */
     public Duke (String filePath) {
         ui = new UI();
         parser = new Parser();
@@ -28,6 +37,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Brain of the Duke object - Execute the duke object until isQuit is True.
+     */
     public void runDuke(){
         ui.msgWelcome();
         boolean isQuit = false;
@@ -38,13 +50,14 @@ public class Duke {
                 Command c = Parser.parse(userInput);
                 c.execute(tasks, storage, ui);
                 isQuit = c.isQuit();
-            } catch (InvalidInputException e){
+            } catch (CommandInvalidException e){
                 System.out.println("\tUnrecognized Command");
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("\tPlease enter description after command");
-            } catch (FileException e) {
-                e.printStackTrace();
-            } finally {
+            } catch (InvalidInputException e) {
+                ui.msgError(e.getMessage());
+            }
+            finally {
                 ui.showLine();
             }
         }

@@ -30,6 +30,10 @@ public class UI {
         System.out.println("\t Task cannot be found! Please enter again!");
     }
 
+    /**
+     * Activate scanner to read user command
+     * @return user input message
+     */
     public String readCommand(){
         Scanner in = new Scanner(System.in);
         return in.nextLine();
@@ -39,6 +43,10 @@ public class UI {
         System.out.println(DIVIDER_LINE);
     }
 
+    /**
+     * Show user different types of error msg
+     * @param errorMsg Error message
+     */
     public static void msgError(String errorMsg){
         System.out.print("\tError occurred: ");
         switch(errorMsg){

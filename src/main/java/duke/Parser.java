@@ -6,7 +6,16 @@ import error.*;
 
 public class Parser {
 
-    public static Command parse(String input) throws  InvalidInputException, FileException {
+    /**
+     * Parser to read user input message and create new commands
+     *
+     * @param input user input message
+     * @return Different types of commands
+     * @throws InvalidInputException if input message have errors
+     * @throws CommandInvalidException if wrong command was given by users
+     */
+
+    public static Command parse(String input) throws  InvalidInputException, CommandInvalidException {
         String taskType;
         String[] userInputArray;
         userInputArray = input.split(" ", 2);
@@ -26,7 +35,7 @@ public class Parser {
         case "bye":
             return new ExitCommand();
         default:
-            throw new FileException();
+            throw new CommandInvalidException();
 
         }
     }

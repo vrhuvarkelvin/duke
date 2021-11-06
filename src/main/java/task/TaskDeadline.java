@@ -53,7 +53,7 @@ public class TaskDeadline extends Task {
         this.deadline = deadline;
     }
 
-    public void setDone(){
+    public void setTaskDone(){
         this.isDone = true;
         System.out.println("\tNice! I've marked this task as done:\n" +
                 "\t  [D][X] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
@@ -73,6 +73,6 @@ public class TaskDeadline extends Task {
         if (isDone){
             frontTxt = "[D][X] ";
         }
-        return (frontTxt + getTaskDescription() + "(at: " + getDeadlinePrint() + ")");
+        return (frontTxt + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
     }
 }

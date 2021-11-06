@@ -50,7 +50,7 @@ public class TaskEvents extends Task{
         return save;
     }
 
-    public void setDone(){
+    public void setTaskDone(){
         this.isDone = true;
         System.out.println("\tNice! I've marked this task as done:\n" +
                 "\t  [E][X] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");

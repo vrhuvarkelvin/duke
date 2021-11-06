@@ -19,7 +19,7 @@ public class DeleteCommand extends Command{
 
     public void execute(TaskList tasks, Storage storage, UI ui) {
         try {
-            tasks.setTaskDone(input);
+            tasks.deleteTask(input);
         } catch (NumberFormatException e) {
             UI.msgInvalidTaskNum();
         } catch (TaskNotFoundException e){

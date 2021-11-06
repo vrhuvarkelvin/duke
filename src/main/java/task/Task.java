@@ -27,10 +27,6 @@ public abstract class Task {
         taskDescription = newTaskDetails;
     }
 
-    public void setTaskDone(){
-        isDone = true;
-    }
-
     public void setTypeOfTask(TaskType typeOfTask){
         this.typeOfTask = typeOfTask;
     }
@@ -40,7 +36,7 @@ public abstract class Task {
     }
 
     public abstract void print();
-    public abstract void setDone();
+    public abstract void setTaskDone();
     public abstract String getTaskDescription();
     public abstract String getSave();
     public abstract String getTaskType();
