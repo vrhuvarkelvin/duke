@@ -17,12 +17,12 @@ public class Parser {
      * @throws InvalidInputException if input message have errors.
      * @throws CommandInvalidException if wrong command was given by users.
      */
-
     public static Command parse(String input) throws  InvalidInputException, CommandInvalidException {
         String taskType;
         String[] userInputArray;
         userInputArray = input.split(" ", 2);
         taskType = userInputArray[0].toLowerCase();
+        assert userInputArray.length >= 1 : "Invalid Input";
 
         switch (taskType){
         case "todo":

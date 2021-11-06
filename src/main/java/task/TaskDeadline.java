@@ -20,9 +20,6 @@ public class TaskDeadline extends Task {
         setDeadline(deadline);
         this.isDone = isDone;
     }
-    public LocalDateTime getDateTime(){
-        return deadline;
-    }
 
     public String getTaskDescription(){
         return taskDescription;

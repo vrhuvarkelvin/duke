@@ -15,10 +15,10 @@ public class Duke {
     private static String Path = "data/tasks.txt";;
 
     /**
+     * Read and convert String in text (filepath) to a TaskList object.
      * Constructor for Duke Object.
      * Filepath was given in Main method to call this constructor.
      * Creates a UI, Parser, Storage object.
-     * Read and convert String in text (filepath) to a TaskList object.
      * If encounter error to read the txt file, auto create a new empty Tasklist object.
      *
      * @param filePath Path of the text.file to be read/save.

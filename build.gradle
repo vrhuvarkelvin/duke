@@ -33,7 +33,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "ChanKhaiWen"
     archiveClassifier = null
 }
 
@@ -41,6 +41,10 @@ checkstyle {
     toolVersion = '8.29'
 }
 
-run{
+run {
     standardInput = System.in
+}
+
+run {
+    enableAssertions = true
 }

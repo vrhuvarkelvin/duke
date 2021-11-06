@@ -75,7 +75,6 @@ public class TaskList {
      *
      * @param taskDescription Task description e.g. Project Meeting.
      */
-
     public void addItemToDo(String taskDescription) {
         list.add(new TaskToDo(taskDescription));
         msgForAdd();
@@ -103,7 +102,7 @@ public class TaskList {
         } catch (Exception e) {
             throw new InvalidInputException("INVALID_DATE_FORMAT");
         }
-
+        assert input.length == 2 : "Invalid Input";
         list.add(new TaskDeadline(input[0], date));
         msgForAdd();
     }
@@ -129,6 +128,7 @@ public class TaskList {
         } catch (Exception e){
             throw new InvalidInputException("INVALID_DATE_FORMAT_ERROR");
         }
+        assert input.length == 2 : "Invalid Input";
         list.add(new TaskEvents(input[0], date));
         msgForAdd();
 
@@ -173,6 +173,9 @@ public class TaskList {
      * @throws InvalidInputException If input is not correct.
      */
     public void addTask(String taskType, String input) throws InvalidInputException {
+        assert taskType.equals("todo") || taskType.equals("t") || taskType.equals("deadline")
+                || taskType.equals("d") || taskType.equals("event") || taskType.equals("e") : "Invalid TaskType";
+
         switch (taskType) {
         case "todo":
         case "t":
@@ -242,6 +245,11 @@ public class TaskList {
         System.out.println("\tNow you have " + (list.size()) +" task(s) in the list");
     }
 
+    /**
+     * Message to user when find for matching/non matching tasks in List.
+     *
+     * @param input User input to search for which keyword in List.
+     */
     public void msgForFind(String input){
         int matchedTaskIndex = 1;
 
