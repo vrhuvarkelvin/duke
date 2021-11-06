@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TaskEvents extends Task{
-    private final String DATE_FORMAT = "yyyy-MM-dd";
     private final String PRINT_FORMAT = "MMM d yyyy HH:mm a";
     private final String SAVE_FORMAT = "yyyy-MM-dd HHmm";
     private LocalDateTime timePeriod;
@@ -22,17 +21,10 @@ public class TaskEvents extends Task{
         this.isDone = isDone;
     }
 
-    public LocalDateTime getDateTime(){
-        return timePeriod;
-    }
-
     public String getTaskDescription(){
         return taskDescription;
     }
 
-    public String getTimePeriodDate(){
-        return timePeriod.format(DateTimeFormatter.ofPattern(DATE_FORMAT));
-    }
     public String getTimePeriodPrint(){
         return timePeriod.format(DateTimeFormatter.ofPattern(PRINT_FORMAT));
     }

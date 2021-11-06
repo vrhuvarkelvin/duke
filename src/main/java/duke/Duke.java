@@ -1,7 +1,9 @@
 package duke;
 
 import task.TaskList;
-import error.*;
+import error.FileException;
+import error.CommandInvalidException;
+import error.InvalidInputException;
 import command.*;
 
 public class Duke {
@@ -13,13 +15,13 @@ public class Duke {
     private static String Path = "data/tasks.txt";;
 
     /**
-     * Constructor for Duke Object
-     * Filepath was given in Main method to call this constructor
-     * Creates a UI, Parser, Storage object
-     * Read and convert String in text (filepath) to a TaskList object
-     * If encounter error to read the txt file, auto create a new empty Tasklist object
+     * Constructor for Duke Object.
+     * Filepath was given in Main method to call this constructor.
+     * Creates a UI, Parser, Storage object.
+     * Read and convert String in text (filepath) to a TaskList object.
+     * If encounter error to read the txt file, auto create a new empty Tasklist object.
      *
-     * @param filePath Path of the text.file to be read/save
+     * @param filePath Path of the text.file to be read/save.
      */
     public Duke (String filePath) {
         ui = new UI();
@@ -56,8 +58,7 @@ public class Duke {
                 System.out.println("\tPlease enter description after command");
             } catch (InvalidInputException e) {
                 ui.msgError(e.getMessage());
-            }
-            finally {
+            } finally {
                 ui.showLine();
             }
         }

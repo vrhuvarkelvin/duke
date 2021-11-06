@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TaskDeadline extends Task {
-    private final String DATE_FORMAT = "yyyy-MM-dd";
     private final String PRINT_FORMAT = "MMM d yyyy HH:mm a";
     private final String SAVE_FORMAT = "yyyy-MM-dd HHmm";
     private LocalDateTime deadline;
@@ -27,10 +26,6 @@ public class TaskDeadline extends Task {
 
     public String getTaskDescription(){
         return taskDescription;
-    }
-
-    public String getDeadlineDate(){
-        return deadline.format(DateTimeFormatter.ofPattern(DATE_FORMAT));
     }
 
     public String getDeadlinePrint(){

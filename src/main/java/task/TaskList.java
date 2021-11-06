@@ -1,6 +1,8 @@
 package task;
 
-import error.*;
+import error.FileException;
+import error.InvalidInputException;
+import error.TaskNotFoundException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,10 +13,9 @@ public class TaskList {
     private ArrayList<String> taskSave;
     public Task recentDelete;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
-     * Constructor of TaskList
+     * Constructor of TaskList.
      */
     public TaskList() {
         list = new ArrayList<Task>();
@@ -22,16 +23,17 @@ public class TaskList {
     }
 
     /**
-     * Takes in input of String from loaded file (txt file) and creates a new list with Tasks
+     * Takes in input of String from loaded file (txt file) and creates a new list with Tasks.
      *
-     * @param loadFile String from text file
-     * @throws FileException If file is not found
+     * @param loadFile String from text file.
+     * @throws FileException If file is not found.
      */
     public TaskList(ArrayList<String> loadFile) throws FileException{
         list = new ArrayList<>();
         taskSave = new ArrayList<>();
         String[] taskArray;
         loadFile.listIterator();
+
         for(String task : loadFile){
             taskArray = task.split(" \\| ");
             String taskType, taskStatus, taskDescription;
@@ -69,9 +71,9 @@ public class TaskList {
     }
 
     /**
-     * add new TODO object into TaskList
+     * add new TODO object into TaskList.
      *
-     * @param taskDescription Task description e.g. Project Meeting
+     * @param taskDescription Task description e.g. Project Meeting.
      */
 
     public void addItemToDo(String taskDescription) {
@@ -80,10 +82,10 @@ public class TaskList {
     }
 
     /**
-     * add new DEADLINE object into Tasklist
+     * add new DEADLINE object into Tasklist.
      *
-     * @param msgInput UserCommand (Task Description + /by + date & time)
-     * @throws InvalidInputException If input is not correct (Too short or too long)
+     * @param msgInput UserCommand (Task Description + /by + date & time).
+     * @throws InvalidInputException If input is not correct (Too short or too long).
      */
 
     public void addItemToDeadline(String msgInput) throws InvalidInputException{
@@ -95,6 +97,7 @@ public class TaskList {
         } else if (input.length > 2){
             throw new InvalidInputException("DEADLINE_DESCRIPTION_ERROR");
         }
+
         try {
             date = LocalDateTime.parse(input[1],DATE_TIME_FORMATTER);
         } catch (Exception e) {
@@ -106,10 +109,10 @@ public class TaskList {
     }
 
     /**
-     * add new EVENTS object into TaskList
+     * add new EVENTS object into TaskList.
      *
-     * @param msgInput UserCommand (Task Description + /at + date & time)
-     * @throws InvalidInputException If input is not correct (Too short or too long)
+     * @param msgInput UserCommand (Task Description + /at + date & time).
+     * @throws InvalidInputException If input is not correct (Too short or too long).
      */
     public void addItemToEvents(String msgInput) throws InvalidInputException{
         String[] input = msgInput.split("/at ");
@@ -120,6 +123,7 @@ public class TaskList {
         } else if (input.length > 2){
             throw new InvalidInputException("EVENT_DESCRIPTION_ERROR");
         }
+
         try {
             date = LocalDateTime.parse(input[1],DATE_TIME_FORMATTER);
         } catch (Exception e){
@@ -131,10 +135,10 @@ public class TaskList {
     }
 
     /**
-     * Set the task to Done status
+     * Set the task to Done status.
      *
-     * @param index index of the task in TaskList
-     * @throws TaskNotFoundException If task index is not found in TaskList
+     * @param index index of the task in TaskList.
+     * @throws TaskNotFoundException If task index is not found in TaskList.
      */
     public void setTaskDone(String index) throws TaskNotFoundException {
         Integer taskNumber = Integer.parseInt(index);
@@ -147,8 +151,8 @@ public class TaskList {
     /**
      * Delete the task
      *
-     * @param index index of the task in TaskList
-     * @throws TaskNotFoundException If task index is not found in TaskList
+     * @param index index of the task in TaskList.
+     * @throws TaskNotFoundException If task index is not found in TaskList.
      */
     public void deleteTask(String index) throws TaskNotFoundException {
         Integer taskNumber = Integer.parseInt(index);
@@ -161,29 +165,32 @@ public class TaskList {
     }
 
     /**
-     * To determine the type of task
-     * Called by AddCommand
+     * To determine the type of task.
+     * Called by AddCommand.
      *
-     * @param taskType The type of task (TODO, DEADLINE, EVENT)
-     * @param input Task description
-     * @throws InvalidInputException If input is not correct
+     * @param taskType The type of task (TODO, DEADLINE, EVENT).
+     * @param input Task description.
+     * @throws InvalidInputException If input is not correct.
      */
     public void addTask(String taskType, String input) throws InvalidInputException {
         switch (taskType) {
         case "todo":
+        case "t":
             addItemToDo(input);
             break;
         case "deadline":
+        case "d":
             addItemToDeadline(input);
             break;
         case "event":
+        case "e":
             addItemToEvents(input);
             break;
         }
     }
 
     /**
-     * Get the String format of each task and put them in an ArrayList of String
+     * Get the String format of each task and put them in an ArrayList of String.
      */
     public void saveList(){
         for(Task task : list){
@@ -192,9 +199,9 @@ public class TaskList {
     }
 
     /**
-     * To consolidate all tasks into String
+     * To consolidate all tasks into String.
      *
-     * @return ArrayList of String to be stored in Text File
+     * @return ArrayList of String to be stored in Text File.
      */
     public ArrayList<String> getSave(){
         return taskSave;
@@ -202,7 +209,7 @@ public class TaskList {
 
 
     /**
-     * Message to user when a task is added
+     * Message to user when a task is added.
      */
     public void msgForAdd(){
         System.out.println("Got it, I've added this task:");
@@ -211,7 +218,7 @@ public class TaskList {
     }
 
     /**
-     * Print out all tasks in TaskList
+     * Print out all tasks in TaskList.
      */
     public void msgForList(){
         System.out.println("\tHere are the tasks in your list:");
@@ -227,7 +234,7 @@ public class TaskList {
     }
 
     /**
-     * Message to user when a task is deleted
+     * Message to user when a task is deleted.
      */
     public void msgForDelete(){
         System.out.println("\tNoted. I have removed the task: ");

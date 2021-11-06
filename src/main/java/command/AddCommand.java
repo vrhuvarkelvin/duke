@@ -3,7 +3,7 @@ package command;
 import duke.UI;
 import duke.Storage;
 import task.TaskList;
-import error.*;
+import error.InvalidInputException;
 
 public class AddCommand extends Command{
     protected String input;

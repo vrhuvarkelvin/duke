@@ -1,7 +1,5 @@
 package task;
 
-import java.time.LocalDateTime;
-
 public abstract class Task {
     protected String taskDescription;
     protected boolean isDone;
@@ -15,24 +13,8 @@ public abstract class Task {
         return taskDescription;
     }
 
-    public Boolean getStatus() {
-        return isDone;
-    }
-
-    public TaskType getTypeOfTask() {
-        return typeOfTask;
-    }
-
     public void setTask(String newTaskDetails){
         taskDescription = newTaskDetails;
-    }
-
-    public void setTypeOfTask(TaskType typeOfTask){
-        this.typeOfTask = typeOfTask;
-    }
-
-    public LocalDateTime getDateTime(){
-        return null;
     }
 
     public abstract void print();

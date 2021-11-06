@@ -16,25 +16,26 @@ public class Storage {
     }
 
     /**
-     * Creates a new file with parent directory OR
-     * Load existing file
+     * Creates a new file with parent directory OR/
+     * Load existing file.
      */
     public void newFile(){
         try {
             File f = new File(filePath);
             f.getParentFile().mkdirs();
-            if (f.createNewFile())
+            if (f.createNewFile()) {
                 System.out.println("File created");
-            else
+            } else {
                 System.out.println("Loading existing file");
+            }
         } catch (Exception e) {
             System.err.println(e);
         }
     }
 
     /**
-     * Save all tasks into a text file
-     * Activate when ExitCommand is called
+     * Save all tasks into a text file.
+     * Activate when ExitCommand is called.
      *
      * @param TaskDetailsString array of strings to save into the txt file.
      */
@@ -47,9 +48,9 @@ public class Storage {
     }
 
     /**
-     * Create a new loaded file object (Consists of ArrayList<String>)
+     * Create a new loaded file object (Consists of ArrayList<String>).
      *
-     * @return loaded file with all tasks in ArrayList<String> format
+     * @return loaded file with all tasks in ArrayList<String> format.
      */
     public ArrayList<String> load(){
         try {

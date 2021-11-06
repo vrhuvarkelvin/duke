@@ -2,7 +2,7 @@ package command;
 
 import duke.Storage;
 import duke.UI;
-import error.*;
+import error.TaskNotFoundException;
 import task.TaskList;
 
 public class DoneCommand extends Command{
