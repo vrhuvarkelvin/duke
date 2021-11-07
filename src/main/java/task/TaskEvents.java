@@ -1,23 +1,30 @@
 package task;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TaskEvents extends Task{
-    private final String PRINT_FORMAT = "MMM d yyyy HH:mm a";
-    private final String SAVE_FORMAT = "yyyy-MM-dd HHmm";
-    private LocalDateTime timePeriod;
+    private final String START_TIME_PRINT_FORMAT = "MMM d yyyy HH:mm a";
+    private final String END_TIME_PRINT_FORMAT = "HH:mm a";
+    private final String START_TIME_SAVE_FORMAT = "yyyy-MM-dd HHmm";
+    private final String END_TIME_SAVE_FORMAT = "HHmm";
+    private LocalDateTime startTime;
+    private LocalTime endTime;
 
-    public TaskEvents(String taskDescription, LocalDateTime timePeriod){
+    public TaskEvents(String taskDescription, LocalDateTime startTime, LocalTime endTime){
         super(taskDescription);
-        this.isDone = false;
-        this.typeOfTask = TaskType.EVENT;
-        this.timePeriod = timePeriod;
+        setTaskType();
+        setStartTime(startTime);
+        setEndTime(endTime);
+        this.isDone = isDone;
     }
 
-    public TaskEvents(String taskDescription, LocalDateTime timePeriod, Boolean isDone){
+    public TaskEvents(String taskDescription, LocalDateTime startTime, LocalTime endTime, Boolean isDone){
         super(taskDescription);
-        setTimePeriod(timePeriod);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setTaskType();
         this.isDone = isDone;
     }
 
@@ -26,15 +33,22 @@ public class TaskEvents extends Task{
     }
 
     public String getTimePeriodPrint(){
-        return timePeriod.format(DateTimeFormatter.ofPattern(PRINT_FORMAT));
+        return (startTime.format(DateTimeFormatter.ofPattern(START_TIME_PRINT_FORMAT)) + "~" +
+                endTime.format(DateTimeFormatter.ofPattern(END_TIME_PRINT_FORMAT)));
     }
 
     public String getTimePeriodSave(){
-        return timePeriod.format(DateTimeFormatter.ofPattern(SAVE_FORMAT));
+        return (startTime.format(DateTimeFormatter.ofPattern(START_TIME_SAVE_FORMAT)) + "~" +
+                endTime.format(DateTimeFormatter.ofPattern(END_TIME_SAVE_FORMAT)));
     }
 
     public String getTaskType(){
-        return "E";
+        return TaskType.toStringTaskType(typeOfTask);
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
+        return startTime;
     }
 
     public String getSave(){
@@ -45,29 +59,42 @@ public class TaskEvents extends Task{
     public void setTaskDone(){
         this.isDone = true;
         System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t  [E][X] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
+                "\t  [" + getTaskType() + "][X] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
     }
 
-    public void setTimePeriod(LocalDateTime timePeriod){
-        this.timePeriod = timePeriod;
+    public void setTaskUndone(){
+        this.isDone = false;
+        System.out.println("\tOkay! I've marked this task as not done:\n" +
+                "\t  [" + getTaskType() + "][ ] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
+    }
+
+    public void setStartTime(LocalDateTime startTime){
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime){
+        this.endTime = endTime;
+    }
+
+    public void setTaskType(){
+        this.typeOfTask = TaskType.EVENT;
     }
 
     public void print(){
         if (isDone) {
-            System.out.println("\t  [E][X] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
+            System.out.println("\t  [" + getTaskType() + "][X] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
         }
         else {
-            System.out.println("\t  [E][ ] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
+            System.out.println("\t  [" + getTaskType() + "][ ] " + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
         }
     }
 
     @Override
     public String toString() {
-        String frontTxt = "[E][ ] ";
+        String frontTxt = "[" + getTaskType() + "][ ] ";
         if (isDone){
-            frontTxt = "[E][X] ";
+            frontTxt = "[" + getTaskType() + "][X] ";
         }
         return (frontTxt + getTaskDescription() + "(at: " + getTimePeriodPrint() + ")");
     }
-
 }

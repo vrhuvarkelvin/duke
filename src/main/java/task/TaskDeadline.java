@@ -18,6 +18,7 @@ public class TaskDeadline extends Task {
     public TaskDeadline(String taskDescription, LocalDateTime deadline, Boolean isDone){
         super(taskDescription);
         setDeadline(deadline);
+        setTaskType();
         this.isDone = isDone;
     }
 
@@ -34,36 +35,52 @@ public class TaskDeadline extends Task {
     }
 
     public String getTaskType(){
-        return "D";
+        return TaskType.toStringTaskType(typeOfTask);
     }
+
     public String getSave(){
         String save = getTaskType() + " | " + getDone() + " | " + getTaskDescription() + " | " + getDeadlineSave();
         return save;
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
+        return deadline;
     }
 
     public void setDeadline(LocalDateTime deadline){
         this.deadline = deadline;
     }
 
+    public void setTaskType(){
+        this.typeOfTask = TaskType.DEADLINE;
+    }
+
     public void setTaskDone(){
         this.isDone = true;
         System.out.println("\tNice! I've marked this task as done:\n" +
-                "\t  [D][X] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
+                "\t  [" + getTaskType() + "][X] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
+    }
+
+    public void setTaskUndone(){
+        this.isDone = false;
+        System.out.println("\tOkay! I've marked this task as not done:\n" +
+                "\t  [" + getTaskType() + "][ ] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
     }
 
     public void print(){
         if (isDone) {
-            System.out.println("\t  [D][X] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
+            System.out.println("\t  [" + getTaskType() + "][X] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
         }
         else {
-            System.out.println("\t  [D][ ] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
+            System.out.println("\t  [" + getTaskType() + "][ ] " + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
         }
     }
     @Override
     public String toString() {
-        String frontTxt = "[D][ ] ";
+        String frontTxt = "[" + getTaskType() + "][ ] ";
         if (isDone){
-            frontTxt = "[D][X] ";
+            frontTxt = "[" + getTaskType() + "][X] ";
         }
         return (frontTxt + getTaskDescription() + "(by: " + getDeadlinePrint() + ")");
     }

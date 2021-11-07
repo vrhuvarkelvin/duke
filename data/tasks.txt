@@ -1,9 +1,4 @@
-D | 1 | project  | 2021-11-11 1111
-E | 0 | party  | 2021-11-23 0500
-D | 1 | buy tickets  | 2021-10-11 0800
+T | 0 | project 
+E | 0 | project meeting  | 2021-08-08 1400~1500
+D | 0 | project  | 2021-08-08 2100
 T | 0 | event
-E | 1 | meeting  | 2021-02-21 0900
-D | 0 | event  | 2021-08-08 0808
-T | 0 | event
-T | 0 | event
-D | 0 | project  | 2021-04-04 0404

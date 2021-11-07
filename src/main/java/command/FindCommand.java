@@ -9,7 +9,6 @@ public class FindCommand extends Command{
     protected String input;
 
     public FindCommand(String input){
-        setTaskType(taskType);
         setFind(input);
     }
 

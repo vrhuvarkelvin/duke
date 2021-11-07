@@ -10,7 +10,7 @@ public class Parser {
     /**
      * Parser to read user input message and create new commands.
      * Support Shorter aliases for user commands.
-     * e.g.(t - todo, d - deadline, e - event, del - delete, l - list, b - bye, f - find).
+     * e.g.(t - todo, d - deadline, e - event, del - delete, l - list, b - bye, f - find, v - view).
      *
      * @param input user input message.
      * @return Different types of commands.
@@ -37,18 +37,25 @@ public class Parser {
             return new DeleteCommand(taskType, userInputArray[1]);
         case "done":
             return new DoneCommand(taskType, userInputArray[1]);
+        case "undone":
+            return new UndoneCommand(taskType, userInputArray[1]);
         case "find":
         case "f":
             return new FindCommand(userInputArray[1]);
+        case "view":
+        case "v":
+            return new ViewCommand(userInputArray[1]);
         case "list":
         case "l":
+            if (userInputArray.length >= 2){
+                throw new InvalidInputException("LIST_COMMAND_ERROR");
+            }
             return new ListCommand();
         case "bye":
         case "b":
             return new ExitCommand();
         default:
             throw new CommandInvalidException();
-
         }
     }
 }

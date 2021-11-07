@@ -4,7 +4,9 @@ import error.FileException;
 import error.InvalidInputException;
 import error.TaskNotFoundException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -13,6 +15,8 @@ public class TaskList {
     private ArrayList<String> taskSave;
     public Task recentDelete;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter TIME_FORMATTER_EVENT_END_TIME = DateTimeFormatter.ofPattern("HHmm");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
      * Constructor of TaskList.
@@ -59,9 +63,14 @@ public class TaskList {
                 }
                 break;
             case "E":
+                LocalDateTime startTime;
+                LocalTime endTime;
+
+                String[] time = taskArray[3].split("~");
                 try{
-                    date = LocalDateTime.parse(taskArray[3], DATE_TIME_FORMATTER);
-                    list.add(new TaskEvents(taskDescription, date, isDone));
+                    startTime = LocalDateTime.parse(time[0], DATE_TIME_FORMATTER);
+                    endTime = LocalTime.parse(time[1], TIME_FORMATTER_EVENT_END_TIME);
+                    list.add(new TaskEvents(taskDescription, startTime, endTime, isDone));
                 } catch (Exception e){
                     throw new FileException();
                 }
@@ -75,7 +84,10 @@ public class TaskList {
      *
      * @param taskDescription Task description e.g. Project Meeting.
      */
-    public void addItemToDo(String taskDescription) {
+    public void addItemToDo(String taskDescription) throws InvalidInputException{
+        if(taskDescription.isEmpty()){
+            throw new InvalidInputException("TODO_MISSING_DESCRIPTION");
+        }
         list.add(new TaskToDo(taskDescription));
         msgForAdd();
     }
@@ -84,15 +96,18 @@ public class TaskList {
      * add new DEADLINE object into Tasklist.
      *
      * @param msgInput UserCommand (Task Description + /by + date & time).
-     * @throws InvalidInputException If input is not correct (Too short or too long).
+     * @throws InvalidInputException If input is not correct (Too short or too long) or format is incorrect.
      */
 
     public void addItemToDeadline(String msgInput) throws InvalidInputException{
+        if (msgInput.contains("/at")){
+            throw new InvalidInputException("WRONG_COMMAND_ERROR");
+        }
         String[] input = msgInput.split("/by ");
         LocalDateTime date;
 
-        if (input.length < 2){
-            throw new InvalidInputException("MISSING_DEADLINE_ERROR");
+        if (input.length < 2 || input[0].equals("")){
+            throw new InvalidInputException("DEADLINE_COMMAND_ERROR");
         } else if (input.length > 2){
             throw new InvalidInputException("DEADLINE_DESCRIPTION_ERROR");
         }
@@ -100,7 +115,7 @@ public class TaskList {
         try {
             date = LocalDateTime.parse(input[1],DATE_TIME_FORMATTER);
         } catch (Exception e) {
-            throw new InvalidInputException("INVALID_DATE_FORMAT");
+            throw new InvalidInputException("INVALID_DATE_TIME_FORMAT");
         }
         assert input.length == 2 : "Invalid Input";
         list.add(new TaskDeadline(input[0], date));
@@ -110,26 +125,41 @@ public class TaskList {
     /**
      * add new EVENTS object into TaskList.
      *
-     * @param msgInput UserCommand (Task Description + /at + date & time).
-     * @throws InvalidInputException If input is not correct (Too short or too long).
+     * @param msgInput UserCommand (Task Description + /at + date & time + /to time).
+     * @throws InvalidInputException If input is not correct (Too short or too long) or format is incorrect.
      */
     public void addItemToEvents(String msgInput) throws InvalidInputException{
+        if (msgInput.contains("/by")){
+            throw new InvalidInputException("WRONG_COMMAND_ERROR");
+        }
         String[] input = msgInput.split("/at ");
-        LocalDateTime date;
 
-        if (input.length < 2){
-            throw new InvalidInputException("MISSING_EVENT_ERROR");
+        if (input[1].equals("")){
+            throw new InvalidInputException("EVENT_COMMAND_ERROR");
+        }
+
+        String[] time = input[1].split(" /to ");
+
+        LocalDateTime startTime;
+        LocalTime endTime;
+
+        if(time.length == 1){
+            throw new InvalidInputException("MISSING_EVENT_END_TIME");
+        } else if (input.length < 2 || input[0].equals("")){
+            throw new InvalidInputException("EVENT_COMMAND_ERROR");
         } else if (input.length > 2){
             throw new InvalidInputException("EVENT_DESCRIPTION_ERROR");
         }
 
         try {
-            date = LocalDateTime.parse(input[1],DATE_TIME_FORMATTER);
+            startTime = LocalDateTime.parse(time[0], DATE_TIME_FORMATTER);
+            endTime = LocalTime.parse(time[1], TIME_FORMATTER_EVENT_END_TIME);
         } catch (Exception e){
-            throw new InvalidInputException("INVALID_DATE_FORMAT_ERROR");
+            throw new InvalidInputException("EVENT_INVALID_DATE_TIME_FORMAT_ERROR");
         }
         assert input.length == 2 : "Invalid Input";
-        list.add(new TaskEvents(input[0], date));
+        assert time.length == 2 : "Invalid Input";
+        list.add(new TaskEvents(input[0], startTime, endTime));
         msgForAdd();
 
     }
@@ -146,6 +176,14 @@ public class TaskList {
             throw new TaskNotFoundException();
         }
         list.get(taskNumber-1).setTaskDone();
+    }
+
+    public void setTaskUndone(String index) throws TaskNotFoundException {
+        Integer taskNumber = Integer.parseInt(index);
+        if (list.size() < taskNumber){
+            throw new TaskNotFoundException();
+        }
+        list.get(taskNumber-1).setTaskUndone();
     }
 
     /**
@@ -262,6 +300,34 @@ public class TaskList {
         }
         if (matchedTaskIndex == 1){
             System.out.println("\t No matched task in your list!");
+        }
+    }
+
+    /**
+     * Message to user when user wants to search all tasks on the specified date
+     *
+     * @param inputDate User specified date
+     * @throws InvalidInputException If user give wrong format of date
+     */
+    public void msgForView(String inputDate) throws InvalidInputException{
+        int matchedDateIndex = 1;
+
+        System.out.println("\tHere are the matching tasks on the specified date in your list:");
+        try{
+            LocalDate date = LocalDate.parse(inputDate, DATE_FORMATTER);
+            for (Task task : list){
+                if(task.getDateTime() != null){
+                    if(task.getDateTime().toLocalDate().equals(date)){
+                        System.out.println("\t" + matchedDateIndex + "." + task);
+                        matchedDateIndex++;
+                    }
+                }
+            }
+            if (matchedDateIndex == 1){
+                System.out.println("\t No matched task with the specified date in your list!");
+            }
+        } catch (Exception e){
+            throw new InvalidInputException("INVALID_DATE_FORMAT");
         }
     }
 
