@@ -3,8 +3,8 @@ package duke;
 import java.util.Scanner;
 
 public class UI {
-    private static final String DIVIDER_LINE = "_________________________________________________________";
-    private static final String LONGER_DIVIDER_LINE = "_____________________________________________________________________________________________________________";
+    private final String DIVIDER_LINE = "_________________________________________________________________________________________";
+    private final String LONGER_DIVIDER_LINE = "_____________________________________________________________________________________________________________";
     private static final String INPUT_FORMAT_ERROR = "Please do not use '|' as it breaks the program.";
     private static final String MISSING_EVENT_END_TIME = "Please specify the event end time.";
     private static final String TODO_MISSING_DESCRIPTION = "Please specify task description.";
@@ -19,7 +19,7 @@ public class UI {
     private static final String WRONG_COMMAND_ERROR = "Wrong command is used. Deadline task should use /by meanwhile Event task should use /at and /to";
 
 
-    public static void msgWelcome() {
+    public void msgWelcome() {
         showLongerLine();
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -33,7 +33,7 @@ public class UI {
         showLongerLine();
     }
 
-    public static void msgAllCommands(){
+    public void msgAllCommands(){
         System.out.println("\tHere are the commands available:");
         System.out.println("\t1) Enter 'todo' OR 't' 'text'                             ----- To add a TODO task ");
         System.out.println("\t   e.g. todo buy tickets OR");
@@ -65,7 +65,7 @@ public class UI {
     }
 
     public static void msgInvalidTaskNum(){
-        System.out.println("\t Invalid task number! Please enter again!");
+        System.out.println("\t Invalid task number format! The correct format is e.g. delete/done/undone 3!");
     }
 
     public static void msgTaskNotFound(){
@@ -81,11 +81,11 @@ public class UI {
         return in.nextLine();
     }
 
-    public static void showLine(){
+    public void showLine(){
         System.out.println(DIVIDER_LINE);
     }
 
-    public static void showLongerLine(){
+    public void showLongerLine(){
         System.out.println(LONGER_DIVIDER_LINE);
     }
 

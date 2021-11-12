@@ -1,4 +1,4 @@
-T | 0 | project 
-E | 0 | project meeting  | 2021-08-08 1400~1500
-D | 0 | project  | 2021-08-08 2100
-T | 0 | event
+T | 0 | project
+D | 1 | quiz  | 2021-10-10 2359
+E | 0 | project meeting  | 2021-08-08 2200~2300
+E | 0 | meeting  | 2021-08-08 1400~1800

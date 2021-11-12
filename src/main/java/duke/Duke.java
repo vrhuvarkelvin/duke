@@ -55,7 +55,7 @@ public class Duke {
             } catch (CommandInvalidException e){
                 System.out.println("\tUnrecognized Command");
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("\tPlease enter description after command");
+                System.out.println("\tPlease enter description after command/command format is incorrect.");
             } catch (InvalidInputException e) {
                 ui.msgError(e.getMessage());
             } finally {

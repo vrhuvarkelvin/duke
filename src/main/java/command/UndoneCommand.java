@@ -8,15 +8,30 @@ import task.TaskList;
 public class UndoneCommand extends Command{
     protected String input;
 
+    /**
+     * Constructor of UndoneCommand
+     */
     public UndoneCommand(String taskType, String input){
         setTaskType(taskType);
-        setDone(input);
+        setUndone(input);
     }
 
-    public void setDone(String input){
+    /**
+     * Initiates user input
+     *
+     * @param input user input in String
+     */
+    public void setUndone(String input){
         this.input = input;
     }
 
+    /**
+     * To execute the command
+     *
+     * @param tasks tasklist of tasks
+     * @param storage read/write to text file
+     * @param ui user input
+     */
     public void execute(TaskList tasks, Storage storage, UI ui) {
         try {
             tasks.setTaskUndone(input);

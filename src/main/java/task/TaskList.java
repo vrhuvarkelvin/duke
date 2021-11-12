@@ -11,9 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> list;
-    private ArrayList<String> taskSave;
-    public Task recentDelete;
+    private static ArrayList<Task> list;
+    private static ArrayList<String> taskSave;
+    public static Task recentDelete;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter TIME_FORMATTER_EVENT_END_TIME = DateTimeFormatter.ofPattern("HHmm");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -134,7 +134,7 @@ public class TaskList {
         }
         String[] input = msgInput.split("/at ");
 
-        if (input[1].equals("")){
+        if (input[1].equals(" ")){
             throw new InvalidInputException("EVENT_COMMAND_ERROR");
         }
 
@@ -329,6 +329,24 @@ public class TaskList {
         } catch (Exception e){
             throw new InvalidInputException("INVALID_DATE_FORMAT");
         }
+    }
+
+    /**
+     * To get size of the TaskList
+     *
+     * @return size of ArrayList<Task> list;
+     */
+    public int getSize(){
+        return list.size();
+    }
+
+    /**
+     * To get taskList
+     *
+     * @return tasks in ArrayList<Task>
+     */
+    public ArrayList<Task> getList(){
+        return list;
     }
 
 }
